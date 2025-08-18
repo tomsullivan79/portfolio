@@ -1,11 +1,85 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Your Name - Portfolio</title>
+  </head>
+  <body>
+    <header>
+      <h1>Your Name</h1>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#writing">Writing</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
+    <main>
+      <section id="hero">
+        <h2>Digital Creator & Developer</h2>
+        <p>I build software, AI agents, and create digital experiences.</p>
+      </section>
 
-<Layout>
-	<Welcome />
-</Layout>
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-grid">
+          <div class="project-card">
+            <h3>Project 1</h3>
+            <p>Description of your project</p>
+          </div>
+          <!-- Add more project cards -->
+        </div>
+      </section>
+
+      <section id="writing">
+        <h2>Writing</h2>
+        <!-- Your writing content -->
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <p>Tell your story here.</p>
+      </section>
+    </main>
+
+    <style>
+      /* Add your styles here */
+      body {
+        font-family: system-ui, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+      
+      header {
+        padding: 2rem;
+        border-bottom: 1px solid #eee;
+      }
+      
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+      
+      section {
+        margin: 4rem 0;
+      }
+      
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      
+      .project-card {
+        padding: 2rem;
+        border: 1px solid #eee;
+        border-radius: 8px;
+      }
+    </style>
+  </body>
+</html>
