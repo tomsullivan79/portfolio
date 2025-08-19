@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PokerScout — Portfolio 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root{
+      --bg: #0b0e14;
+      --panel: #111522;
+      --brand: #5b9cff;
+      --text: #e7ecf3;
+      --muted: #a7b1c2;
+      --border: #22304a;
+      --chip: #1b2336;
+      --shadow: 0 8px 24px rgba(0,0,0,.35);
+      --radius: 14px;
+      --radius-sm: 10px;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f8fb; --panel:#ffffff; --text:#0e1217; --muted:#445063; --border:#e7eaf0; --chip:#f0f3f9; --brand:#3b6cff;
+      }
+    }
+
+    *{ box-sizing:border-box }
+    html, body{ height:100% }
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text); background:linear-gradient(180deg, var(--bg), #0c1221 60%, var(--bg));
+      line-height:1.55;
+    }
+
+    /* Layout */
+    .wrap{ max-width:960px; margin:0 auto; padding:24px; }
+    .hero{
+      display:grid; grid-template-columns: 1fr; gap:20px;
+      background: radial-gradient(1200px 400px at 60% -10%, rgba(91,156,255,.12), transparent 60%),
+                  radial-gradient(700px 300px at -10% 20%, rgba(140,100,255,.12), transparent 60%),
+                  var(--panel);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:28px;
+      box-shadow: var(--shadow);
+    }
+    .kicker{ letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; font-size:.8rem }
+    h1{ margin:6px 0 10px; font-size:2.1rem }
+    .meta{ display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; color:var(--muted) }
+    .chip{
+      display:inline-flex; align-items:center; gap:.5ch;
+      padding:6px 10px; border-radius:999px; background:var(--chip); border:1px solid var(--border);
+      font-size:.85rem; color:var(--text)
+    }
+    .chip a{ color:inherit; text-decoration:none }
+    .chip a:hover{ text-decoration:underline }
+
+    /* Content grid: always single column */
+.content{
+  display: grid;
+  grid-template-columns: 1fr;  /* full-width, single column */
+  gap: 22px;
+  margin-top: 24px;
+}
+
+/* Cards (unchanged) */
+.card{
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.card h2{ margin: 2px 0 12px; font-size: 1.3rem; }
+.card h3{ margin: 16px 0 10px; font-size: 1.05rem; }
+p{ margin: .5em 0 1em; }
+ul{ margin: .3em 0 1em 1.2em; padding: 0; }
+li{ margin: .4em 0; }
+.bullets-tight li{ margin: .25em 0; }
+
+/* Inline accent */
+.accent{ color: var(--brand); font-weight: 600; }
+
+/* Override previous 2-col behavior on wide screens */
+@media (min-width: 980px){
+  .content{
+    grid-template-columns: 1fr; /* keep single column even on desktop */
+    gap: 22px;
+  }
+}
+
+/* If you previously used these helpers, neutralize them */
+.span-2{ grid-column: auto; }     /* no need to span across columns now */
+.grid-2{ display: block; }        /* turn any grid-2 into a normal block */
+
+
+    /* Section dividers */
+    .divide{ height:1px; background:linear-gradient(90deg, transparent, var(--border), transparent); margin:14px 0 8px }
+
+    /* Link button */
+    .btn{
+      display:inline-flex; align-items:center; gap:.6ch;
+      background:linear-gradient(180deg, var(--brand), #457ff9);
+      color:white; padding:10px 14px; border-radius:10px; text-decoration:none; font-weight:600; box-shadow: var(--shadow);
+    }
+    .btn:hover{ filter:brightness(1.05) }
+
+/* Two-column flow for the Scope list on wide screens */
+.cols-2 {
+  margin: .3em 0 1em 1.2em; /* keep your existing spacing */
+  padding: 0;
+  column-count: 2;
+  column-gap: 18px;
+}
+
+@media (max-width: 980px) {
+  .cols-2 { column-count: 1; } /* single column on small screens */
+}
+
+/* Prevent nested blocks from splitting across columns */
+.cols-2 > li {
+  break-inside: avoid-column;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  margin: .5em 0;
+}
+
+/* Tighten nested bullet spacing slightly */
+.cols-2 > li > .bullets-tight { margin-top: .35em; }
+
+
+
+
+
+    /* Print */
+    @media print{
+      body{ background:white; color:#111 }
+      .hero,.card{ box-shadow:none; border-color:#ddd }
+      .chip{ border-color:#ddd; background:#f6f8fb }
+      .btn{ display:none }
+      .wrap{ max-width:100%; padding:0 }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <header class="hero">
+      <div>
+        <div class="kicker">Portfolio 2025</div>
+        <h1>PokerScout</h1>
+        <div class="meta">
+          <span class="chip">AI / LLM</span>
+          <span class="chip">Agent.AI Workflow</span>
+          <span class="chip">Prompt Engineering</span>
+          <span class="chip">Analytics</span>
+        </div>
+      </div>
+      <div>
+        <a class="btn" href="https://agent.ai/agent/PokerScout" target="_blank" rel="noopener" aria-label="Open PokerScout">
+          Open PokerScout
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M21 3l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M5 12v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <section class="content">
+
+  <!-- Project Overview -->
+  <article class="card" id="overview">
+    <h2>Project Overview</h2>
+    <p>
+      PokerScout is an AI analyst that ingests a Hendon Mob player profile URL and outputs a standardized scouting dossier.
+      It parses the page, extracts key stats and rankings, and models stake-aware performance (last 12 months & lifetime).
+      Output is delivered as a strict JSON schema and a clean HTML report.
+    </p>
+  </article>
+
+  <!-- Genesis -->
+  <article class="card" id="genesis">
+    <h2>Genesis</h2>
+    <p>
+      Born from the need to look beyond “Total Live Earnings,” PokerScout converts a single Hendon Mob URL into an
+      analyst-grade profile that blends stake-aware performance, competitive tiering, rankings, and travel cadence.
+      The result is a production-ready Agent.AI workflow with a strict JSON contract and polished HTML report that
+      standardizes scouting and reduces manual research into a fast, explainable output.
+    </p>
+  </article>
+
+  <!-- Scope -->
+  <article class="card" id="scope">
+    <h2>Scope</h2>
+    <ul>
+      <li><b>Agent workflow design (Agent.AI):</b> Orchestrated the end-to-end action flow (input URL → fetch → parse → analyze → render).</li>
+      <li><b>Prompt engineering:</b> Deterministic LLM prompt with a typed JSON contract, null-safe fields, and rule-based heuristics.</li>
+      <li><b>Information extraction:</b> Patterns to pull player name, totals, min/max cash with years, GPI ranking, Popularity ranking, series counts, and location features from noisy HTML.</li>
+      <li><b>Domain logic &amp; modeling:</b>
+        <ul class="bullets-tight">
+          <li>Stake tier classification from event titles (handling “buy-in + fee” formats &amp; currency hints).</li>
+          <li>Final-table rules (9-max default, 6-/8-max detection).</li>
+          <li>Competitive tiering with High Roller override by average buy-in and high-roller share.</li>
+        </ul>
+      </li>
+      <li><b>Data normalization:</b> Standardized stake buckets (Low/Mid/High/High Roller), lifetime vs. 12-month views, percent-of-total calculations.</li>
+      <li><b>Presentation &amp; UX:</b> Consistent HTML sections and reversed stake order (High Roller → High → Mid → Low) for performance blocks; inline definitions and graceful fallbacks (“Unavailable”).</li>
+      <li><b>Quality &amp; robustness:</b> Null-handling, defensive parsing, consistent formatting to prevent broken placeholders.</li>
+    </ul>
+  </article>
+
+  <!-- Skills Demonstrated -->
+  <article class="card" id="skills">
+    <h2>Skills Demonstrated</h2>
+    <ul>
+      <li><b>AI/LLM:</b> Prompt engineering, schema design, deterministic extraction, instruction following.</li>
+      <li><b>Data parsing:</b> Regex/pattern matching, HTML text normalization, currency/buy-in interpretation.</li>
+      <li><b>Analytics &amp; modeling:</b> Heuristic modeling for stake segmentation, temporal rollups.</li>
+      <li><b>Product thinking:</b> Clear problem framing (beyond “Total Live Earnings”), explainable outputs, resilience to missing data.</li>
+      <li><b>Frontend output:</b> Semantic HTML templating, readability, accessibility-friendly layout choices.</li>
+      <li><b>Ops &amp; QA:</b> Error handling, guardrails, and reproducibility across profiles.</li>
+    </ul>
+  </article>
+
+  <!-- Deliverables -->
+  <article class="card" id="deliverables">
+    <h2>Deliverables</h2>
+    <ul>
+      <li>Structured JSON schema (<code>playerInsights</code>) with clearly defined fields and enums.</li>
+      <li>HTML report template matching the schema:
+        <ul class="bullets-tight">
+          <li>Results Summary (incl. GPI &amp; Popularity)</li>
+          <li>Competitive Profile (Tier, Volume Style + concise descriptions)</li>
+          <li>Activity &amp; Recency; Volume &amp; Consistency</li>
+          <li>Financial Stats (min/max cash + years)</li>
+          <li>Performance (Last 12 Months) &amp; Performance (Lifetime) by stake with cashes / % / wins / FTs (ordered HR → High → Mid → Low)</li>
+          <li>Tournament Series Results (WSOP/WPT/EPT/Regional)</li>
+          <li>Travel &amp; Tour Activity (cities, avg days, clusters)</li>
+        </ul>
+      </li>
+    </ul>
+  </article>
+
+</section>
+
+
+    </section>
+  </main>
+
+</body>
+</html>
