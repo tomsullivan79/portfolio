@@ -1,25 +1,15 @@
 @import "tailwindcss";
 
 :root{
-  --bg:#0b1020; --surface:#0f172a;
-  --text:#e5e7eb; --muted:#94a3b8;
-  --ring:#22d3ee; --accent:#a78bfa;
-
-  --panel:#111522; --brand:#5b9cff;
-  --border:#22304a; --chip:#1b2336;
-
-  --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.35);
+  --bg:#0b1020; --surface:#0f172a; --text:#e5e7eb; --muted:#94a3b8;
+  --ring:#22d3ee; --accent:#a78bfa; --panel:#111522; --brand:#5b9cff;
+  --border:#22304a; --chip:#1b2336; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.35);
 }
-
-html{ color-scheme:dark; }
+html{ color-scheme:dark }
 body{
   margin:0; line-height:1.55; color:var(--text);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
   background: radial-gradient(1200px 800px at 10% 0%, #111827 0%, var(--bg) 50%), var(--bg);
 }
-
-/* card utility used on the details page */
-.card{
-  background:var(--panel); border:1px solid var(--border);
-  border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);
-}
+.wrap{ max-width:1180px; margin:0 auto; padding:24px }
+.card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow) }

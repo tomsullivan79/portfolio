@@ -137,22 +137,27 @@ const nav = [
     </script>
 
     <style is:global>
-      :root {
-        --bg: #0b1020;
-        --surface: #0f172a; /* slate-900-ish */
-        --text: #e5e7eb;    /* gray-200 */
-        --muted: #94a3b8;   /* slate-400 */
-        --ring: #22d3ee;    /* cyan-400 */
-        --accent: #a78bfa;  /* violet-400 */
-      }
-      html { color-scheme: dark; }
-      body {
-        background: radial-gradient(1200px 800px at 10% 0%, #111827 0%, var(--bg) 50%), var(--bg);
-        color: var(--text);
-      }
-      .glass { background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08); }
-      .ring-focus { outline: none; box-shadow: 0 0 0 3px var(--ring); }
-    </style>
+    :root{
+      --bg:#0b1020; --surface:#0f172a; --text:#e5e7eb; --muted:#94a3b8;
+      --ring:#22d3ee; --accent:#a78bfa; --panel:#111522; --brand:#5b9cff;
+      --border:#22304a; --chip:#1b2336; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+    html{ color-scheme:dark }
+    body{
+      margin:0; line-height:1.55; color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
+      background: radial-gradient(1200px 800px at 10% 0%, #111827 0%, var(--bg) 50%), var(--bg);
+    }
+    .glass{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .card{
+      background:var(--panel); border:1px solid var(--border);
+      border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);
+    }
+  </style>
   </head>
 
   <body class="selection:bg-cyan-500/30">
