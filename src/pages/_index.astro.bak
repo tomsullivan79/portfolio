@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const site = {
+  name: "Tom Sullivan",
+  role: "Digital Creator & Developer",
+  blurb:
+    "I build software, AI agents, and digital experiences across wildlife triage, treasure hunting, and poker analytics.",
+  email: "tsullivan79@gmail.com",
+};
+
+const projects = [
+  {
+    title: "PokerScout",
+    summary:
+      "AI analyst that ingests a Hendon Mob player profile URL and outputs a standardized scouting dossier.",
+    tags: ["Agent.AI", "LLM", "Prompt Engineering", "Data Parsing", "HTML/Templating", "Analytics"],
+    href: "/projects/pokerscout",
+  },
+];
+---
+
+<BaseLayout title="Tom Sullivan | Portfolio">
+  <section class="hero">
+    <div>
+      <div class="kicker">Portfolio</div>
+      <h1 style="margin:6px 0 10px; font-size:2.1rem">{site.name}</h1>
+      <p style="color:var(--muted)">{site.role}</p>
+      <p style="max-width:60ch">{site.blurb}</p>
+      <div style="display:flex; gap:10px; margin-top:12px">
+        <a href="#projects" class="btn">View Projects</a>
+        <a href="#contact" class="btn" style="background:linear-gradient(180deg, var(--accent), #7f68ff)">Contact</a>
+      </div>
+    </div>
+    <div class="glass" style="padding:16px">
+      <ul class="meta">
+        <li class="chip">Agents &amp; Automation</li>
+        <li class="chip">Python • Voiceflow • ArcGIS</li>
+        <li class="chip">Oak Grove, MN</li>
+        <li class="chip"><a href={`mailto:${site.email}`}>Email me</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" style="padding-left:0;padding-right:0; margin-top:24px">
+    <h2 style="font-size:1.8rem; margin:22px 0 12px">Projects</h2>
+    <div style="display:grid; grid-template-columns:1fr; gap:18px">
+      {projects.map((p) => (
+        <article class="glass" style="padding:18px">
+          <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px">
+            <h3 style="margin:0; font-size:1.2rem">
+              <a href={p.href} style="text-decoration:none; color:inherit">{p.title}</a>
+            </h3>
+          </header>
+          <p style="margin-top:8px">{p.summary}</p>
+          <ul style="display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:12px 0 0; padding:0">
+            {p.tags.map((t) => (<li class="chip">{t}</li>))}
+          </ul>
+          <footer style="margin-top:12px; display:flex; gap:12px; align-items:center">
+            <a href={p.href} style="margin-left:auto; color:var(--muted); text-decoration:none">Details →</a>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,14 +1,10 @@
 ---
-// Import Tailwind (adjust the path if your stylesheet lives elsewhere)
-// If you already import global.css in a layout, you can remove this line.
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const site = {
   name: "Tom Sullivan",
   title: "Tom Sullivan | Portfolio",
   role: "Digital Creator & Developer",
-
-
   blurb:
     "I build software, AI agents, and digital experiences across wildlife triage, treasure hunting, and poker analytics.",
   email: "tsullivan79@gmail.com",
@@ -21,357 +17,118 @@ const site = {
 
 const projects = [
   {
-  title: "PokerScout",
-  summary:
-    "AI analyst that ingests a Hendon Mob player profile URL and outputs a standardized scouting dossier.",
-  tags: ["Agent.AI", "LLM", "Prompt Engineering", "Data Parsing", "HTML/Templating", "Analytics"],
-  href: "/projects/pokerscout",
-  // repo: "https://github.com/itstomsullivan/pokerscout", // add when ready
-  // docs: "/projects/pokerscout#docs" // add when you publish docs
-},
-];
-
-
-
-
-
-{/* const posts = [  
-  {
-    title: "Designing a Wildlife Triage Agent",
-    date: "2025-08-06",
-    href: "/writing/wrc-triage-agent-design",
-    excerpt:
-      "Notes on intent routing, safety rails, and MMS photo intake for species ID.",
+    title: "PokerScout",
+    summary:
+      "AI analyst that ingests a Hendon Mob player profile URL and outputs a standardized scouting dossier.",
+    tags: ["Agent.AI", "LLM", "Prompt Engineering", "Data Parsing", "HTML/Templating", "Analytics"],
+    href: "/projects/pokerscout",
   },
-  {
-    title: "Digital Artifacts: Capturing Places for Remote Study",
-    date: "2025-06-12",
-    href: "/writing/digital-artifacts-overview",
-    excerpt:
-      "From field photos to shareable 3D—practical tooling and workflows.",
-  },
-];  
-
-Think about the kind of testimonials I want and who I want them from:
-
-Ed Menendez
-Kavi
-Jan
-Paul Charchian?
-Joe Simental?
-WRC and other clients when I get them…
-
-const testimonials = [
-  { quote: "Tom shipped our MVP in two weeks and it just worked.", author: "A. Nguyen", role: "Founder, DonorTech" },
-  { quote: "Smart, pragmatic, and fast. Highly recommended.", author: "E. Menendez", role: "CTO, Avela" },
-  { quote: "A great partner for AI agent prototypes.", author: "K. Turnbull", role: "Founder, Don Kavi" },
-];  */}
-
-{/*
-const nav = [
-  { label: "Projects", href: "#projects" },
-  { label: "Writing", href: "#writing" },
-  { label: "About", href: "#about" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
-  { label: "Legal", href: "#legal" },
-];
---- */}
-
-const nav = [
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
 ];
 ---
 
-
-<!doctype html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={site.blurb} />
-    <title>{site.title}</title>
-    <link rel="icon" href="/favicon.svg" />
-
-    <!-- Open Graph / Twitter -->
-    <meta property="og:title" content={site.title} />
-    <meta property="og:description" content={site.blurb} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={site.url} />
-    <meta property="og:image" content={`${site.url}/og-image.jpg`} />
-    <meta name="twitter:card" content="summary_large_image" />
-
-    <!-- JSON‑LD (Person + WebSite) -->
-    <script type="application/ld+json">
-      {JSON.stringify(
-        {
-          '@context': 'https://schema.org',
-          '@type': 'Person',
-          name: site.name,
-          url: site.url,
-          jobTitle: site.role,
-          sameAs: [site.social.github, site.social.linkedin, site.social.x].filter(Boolean),
-        },
-        null,
-        2
-      )}
-    </script>
-    <script type="application/ld+json">
-      {JSON.stringify(
-        {
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: site.title,
-          url: site.url,
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: `${site.url}/search?q={search_term_string}`,
-            'query-input': 'required name=search_term_string',
-          },
-        },
-        null,
-        2
-      )}
-    </script>
-
-    <style is:global>
-    :root{
-      --bg:#0b1020; --surface:#0f172a; --text:#e5e7eb; --muted:#94a3b8;
-      --ring:#22d3ee; --accent:#a78bfa; --panel:#111522; --brand:#5b9cff;
-      --border:#22304a; --chip:#1b2336; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.35);
-    }
-    html{ color-scheme:dark }
-    body{
-      margin:0; line-height:1.55; color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial;
-      background: radial-gradient(1200px 800px at 10% 0%, #111827 0%, var(--bg) 50%), var(--bg);
-    }
-    .glass{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .card{
-      background:var(--panel); border:1px solid var(--border);
-      border-radius:var(--radius); padding:22px; box-shadow:var(--shadow);
-    }
-  </style>
-  </head>
-
-  <body class="selection:bg-cyan-500/30">
-    <!-- Header -->
-    <header class="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <div class="flex h-16 items-center justify-between">
-          <a href="#hero" class="font-semibold tracking-tight">{site.name}</a>
-          <nav class="hidden gap-6 sm:flex">
-            {nav.map((n) => (
-              <a class="text-[var(--muted)] hover:text-white transition" href={n.href}>{n.label}</a>
-            ))}
-          </nav>
-          <div class="flex items-center gap-3">
-            <a href={site.social.github} aria-label="GitHub" class="text-[var(--muted)] hover:text-white transition">GH</a>
-            <a href={site.social.linkedin} aria-label="LinkedIn" class="text-[var(--muted)] hover:text-white transition">LI</a>
-          </div>
-        </div>
+<BaseLayout title={site.title}>
+  <section class="hero">
+    <div>
+      <div class="kicker">Portfolio</div>
+      <h1 style="margin:6px 0 10px; font-size:2.1rem">{site.name}</h1>
+      <p style="color:var(--muted)">{site.role}</p>
+      <p style="max-width:60ch">{site.blurb}</p>
+      <div style="display:flex; gap:10px; margin-top:12px">
+        <a href="#projects" class="btn">View Projects</a>
+        <a href="#contact" class="btn" style="background:linear-gradient(180deg, var(--accent), #7f68ff)">Contact</a>
       </div>
-    </header>
+    </div>
 
-    <main id="hero" class="mx-auto max-w-6xl px-4 sm:px-6">
-      <!-- Hero -->
-      <section class="pt-16 sm:pt-24">
-        <div class="grid items-center gap-10 sm:grid-cols-2">
-          <div>
-            <h1 class="text-3xl/tight sm:text-5xl/tight font-extrabold tracking-tight bg-gradient-to-r from-cyan-300 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-              {site.name}
-            </h1>
-            <p class="mt-3 text-lg text-[var(--muted)]">{site.role}</p>
-            <p class="mt-4 max-w-prose text-slate-300">{site.blurb}</p>
-            <div class="mt-6 flex flex-wrap gap-3">
-              <a href="#projects" class="glass rounded-xl px-4 py-2 text-sm font-medium hover:scale-[1.02] transition">View Projects</a>
-              <a href="#contact" class="rounded-xl px-4 py-2 text-sm font-medium bg-[var(--accent)]/20 text-violet-100 hover:bg-[var(--accent)]/30 transition">Contact</a>
-            </div>
-          </div>
-          <div class="glass rounded-2xl p-6">
-            <ul class="grid grid-cols-2 gap-4 text-sm text-slate-300">
-              <li class="rounded-lg border border-white/10 p-4">
-                <p class="text-xs uppercase tracking-wide text-slate-400">Focus</p>
-                <p class="mt-1 font-medium">Agents & Automation</p>
-              </li>
-              <li class="rounded-lg border border-white/10 p-4">
-                <p class="text-xs uppercase tracking-wide text-slate-400">Tools</p>
-                <p class="mt-1 font-medium">Python • Voiceflow • ArcGIS</p>
-              </li>
-              <li class="rounded-lg border border-white/10 p-4">
-                <p class="text-xs uppercase tracking-wide text-slate-400">Location</p>
-                <p class="mt-1 font-medium">Oak Grove, MN</p>
-              </li>
-              <li class="rounded-lg border border-white/10 p-4">
-                <p class="text-xs uppercase tracking-wide text-slate-400">Availability</p>
-                <p class="mt-1 font-medium">Open to remote work</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+    <div class="glass" style="padding:16px">
+      <ul class="meta">
+        <li class="chip">Agents & Automation</li>
+        <li class="chip">Python • Voiceflow • ArcGIS</li>
+        <li class="chip">Oak Grove, MN</li>
+        <li class="chip"><a href={`mailto:${site.email}`}>Email me</a></li>
+      </ul>
+    </div>
+  </section>
 
-      <!-- Projects -->
-      <section id="projects" class="pt-16 sm:pt-24 scroll-mt-24">
-        <div class="flex items-end justify-between gap-4">
-          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Projects</h2>
-          <a href="/projects" class="text-sm text-[var(--muted)] hover:text-white">Browse all →</a>
-        </div>
-        <div class="mt-8 grid gap-6 sm:grid-cols-2">
-          {projects.map((p) => (
-            <article class="glass group rounded-2xl p-6 transition hover:border-white/20 hover:-translate-y-0.5 hover:ring-1 hover:ring-cyan-400/30">
-              <header class="flex items-start justify-between gap-4">
-                <h3 class="text-lg font-semibold">
-                  <a href={p.href} class="hover:underline">{p.title}</a>
-                </h3>
-              </header>
-              <p class="mt-2 text-slate-300">{p.summary}</p>
-              <ul class="mt-4 flex flex-wrap gap-2">
-                {p.tags.map((t) => (
-                  <li class="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">{t}</li>
-                ))}
-              </ul>
-              <footer class="mt-5 flex items-center gap-4 text-sm">
-                {p.repo && <a href={p.repo} class="text-[var(--muted)] hover:text-white">Repo</a>}
-                {p.docs && <a href={p.docs} class="text-[var(--muted)] hover:text-white">Docs</a>}
-                <a href={p.href} class="ml-auto text-[var(--muted)] hover:text-white">Details →</a>
-              </footer>
-            </article>
-          ))}
-        </div>
-      </section>
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <h2 class="section-title">Projects</h2>
+    <div class="grid-2">
+      {projects.map((p) => (
+        <article class="glass" style="padding:18px">
+          <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px">
+            <h3 style="margin:0; font-size:1.2rem">
+              <a href={p.href} style="text-decoration:none; color:inherit">{p.title}</a>
+            </h3>
+          </header>
+          <p style="margin-top:8px">{p.summary}</p>
+          <ul style="display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:12px 0 0; padding:0">
+            {p.tags.map((t) => (<li class="chip">{t}</li>))}
+          </ul>
+          <footer style="margin-top:12px; display:flex; gap:12px; align-items:center">
+            <a href={p.href} style="margin-left:auto; color:var(--muted); text-decoration:none">Details →</a>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </section>
 
-{/*      <!-- Writing -->
-      <section id="writing" class="pt-16 sm:pt-24 scroll-mt-24">
-        <div class="flex items-end justify-between gap-4">
-          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Writing</h2>
-          <a href="/writing" class="text-sm text-[var(--muted)] hover:text-white">All posts →</a>
-        </div>
-        <div class="mt-6 divide-y divide-white/10 rounded-2xl border border-white/10">
-          {posts.map((post) => (
-            <article class="p-6">
-              <h3 class="text-lg font-semibold"><a href={post.href} class="hover:underline">{post.title}</a></h3>
-              <p class="mt-1 text-sm text-[var(--muted)]">{new Date(post.date).toLocaleDateString()}</p>
-              <p class="mt-2 text-slate-300">{post.excerpt}</p>
-            </article>
-          ))}
-        </div>
-      </section> */}
-
-      <!-- About -->
-      <section id="about" class="pt-16 sm:pt-24 scroll-mt-24">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">About</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-3">
-          <div class="sm:col-span-2 glass rounded-2xl p-6">
-            <p class="text-slate-300">
-              I'm Tom, a builder focused on practical AI agents, mapping/GIS, and poker tooling.
-              I like shipping useful things fast, then iterating.
-            </p>
-            <ul class="mt-4 list-disc pl-5 text-slate-300">
-              <li>Developing a wildlife triage agent with MMS photo intake and status automation.</li>
-              <li>Exploring digital artifacts—shareable 3D/2D captures for remote analysis and storytelling.</li>
-              <li>Long-time poker student; building study tools for mixed games like Razz.</li>
-            </ul>
-          </div>
-          <aside class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">Quick links</h3>
-            <ul class="mt-3 space-y-2 text-slate-300">
-              <li><a class="hover:underline" href="/resume.pdf">Résumé (PDF)</a></li>
-              <li><a class="hover:underline" href="/now">Now</a></li>
-              <li><a class="hover:underline" href="/uses">Uses / Stack</a></li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-{/*  
-      <!-- Testimonials -->
-      <section id="testimonials" class="pt-16 sm:pt-24 scroll-mt-24">
-        <div class="flex items-end justify-between gap-4">
-          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Testimonials</h2>
-        </div>
-        <div class="mt-8 grid gap-6 sm:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure class="glass rounded-2xl p-6 hover:-translate-y-0.5 transition hover:ring-1 hover:ring-cyan-400/30">
-              <blockquote class="text-slate-200">“{t.quote}”</blockquote>
-              <figcaption class="mt-4 text-sm text-[var(--muted)]">
-                <span class="font-medium text-slate-300">{t.author}</span> — {t.role}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section> */}
-
-      <!-- Contact (Netlify form ready) -->
-      <section id="contact" class="pt-16 sm:pt-24 scroll-mt-24">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Contact</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2">
-          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="glass rounded-2xl p-6">
-            <input type="hidden" name="form-name" value="contact" />
-            <p class="hidden">
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
-            <label class="block text-sm">Name<input name="name" required class="mt-1 w-full rounded-lg bg-slate-800 p-2 focus:ring-2 focus:ring-cyan-400" /></label>
-            <label class="mt-4 block text-sm">Email<input name="email" type="email" required class="mt-1 w-full rounded-lg bg-slate-800 p-2 focus:ring-2 focus:ring-cyan-400" /></label>
-            <label class="mt-4 block text-sm">Message<textarea name="message" rows="5" required class="mt-1 w-full rounded-lg bg-slate-800 p-2 focus:ring-2 focus:ring-cyan-400"></textarea></label>
-            <button type="submit" class="mt-5 rounded-xl bg-cyan-500/20 px-4 py-2 font-medium text-cyan-100 hover:bg-cyan-500/30">Send</button>
-            <p class="mt-3 text-sm text-[var(--muted)]">Prefer email? <a class="underline" href={`mailto:${site.email}`}>{site.email}</a></p>
-          </form>
-          <div class="glass rounded-2xl p-6 text-slate-300">
-            <p class="mb-3">For freelance/consulting, briefly describe your project, timeline, and budget range.</p>
-            <ul class="list-disc pl-5">
-              <li>AI agent prototypes (chat/voice, SMS/MMS).</li>
-              <li>GIS workflows and field data capture.</li>
-              <li>Web apps and small automations.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-{/*        <!-- Legal Basics -->
-      <section id="legal" class="pt-16 sm:pt-24 scroll-mt-24">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Legal Basics</h2>
-        <div class="mt-6 grid gap-6 sm:grid-cols-2">
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">Privacy at a glance</h3>
-            <ul class="mt-3 space-y-2 text-slate-300 list-disc pl-5">
-              <li>I only collect what you submit (e.g., name, email, message) via forms.</li>
-              <li>Analytics may set cookies; you can disable them in your browser or use a blocker.</li>
-              <li>Unsubscribe links appear in any email newsletter.</li>
-              <li>Request your data or deletion anytime: <a class="underline" href={`mailto:${site.email}`}>{site.email}</a></li>
-            </ul>
-          </div>
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold">The formal docs</h3>
-            <p class="mt-2 text-slate-300">For full details, see:</p>
-            <ul class="mt-3 space-y-2">
-              <li><a class="hover:underline" href="/privacy">Privacy Policy</a> (data, cookies, retention)</li>
-              <li><a class="hover:underline" href="/terms">Terms of Use</a> (licensing, liability, attribution)</li>
-            </ul>
-            <p class="mt-3 text-sm text-[var(--muted)]">These are placeholders until you publish your real policies.</p>
-          </div>
-        </div>
-      </section>  */}
-    </main>
-
-    <footer class="mt-24 border-t border-white/10">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10 text-sm text-[var(--muted)]">
-        <p>© {new Date().getFullYear()} {site.name}. Built with Astro · Deployed on Netlify.</p>
+  <!-- About -->
+  <section id="about" class="section">
+    <h2 class="section-title">About</h2>
+    <div class="grid-2">
+      <div class="glass" style="padding:18px">
+        <p>
+          I'm Tom, a builder focused on practical AI agents, mapping/GIS, and poker tooling.
+          I like shipping useful things fast, then iterating.
+        </p>
+        <ul class="bullets-tight" style="margin-left:1.2em">
+          <li>Developing a wildlife triage agent with MMS photo intake and status automation.</li>
+          <li>Exploring digital artifacts—shareable 3D/2D captures for remote analysis and storytelling.</li>
+          <li>Long-time poker student; building study tools for mixed games like Razz.</li>
+        </ul>
       </div>
-    </footer>
+      <aside class="glass" style="padding:18px">
+        <h3 class="card-title" style="margin:0 0 8px; font-size:1.05rem">Quick links</h3>
+        <ul class="bullets-tight" style="margin-left:1.2em">
+          <li><a class="hover:underline" href="/resume.pdf">Résumé (PDF)</a></li>
+          <li><a class="hover:underline" href="/now">Now</a></li>
+          <li><a class="hover:underline" href="/uses">Uses / Stack</a></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
 
-    <script>
-      // Simple theme memory for future toggle (if you add a toggle button later)
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark') document.documentElement.classList.add('dark');
-    </script>
-  </body>
-</html>
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <h2 class="section-title">Contact</h2>
+    <div class="grid-2">
+      <div class="glass" style="padding:18px">
+        <p class="mb-3">For freelance/consulting, briefly describe your project, timeline, and budget range.</p>
+        <ul class="bullets-tight" style="margin-left:1.2em">
+          <li>AI agent prototypes (chat/voice, SMS/MMS).</li>
+          <li>GIS workflows and field data capture.</li>
+          <li>Web apps and small automations.</li>
+        </ul>
+        <p style="margin-top:12px">Prefer email? <a class="underline" href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+      <div class="glass" style="padding:18px">
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="hidden">
+            <label>Don’t fill this out: <input name="bot-field" /></label>
+          </p>
+          <label class="block text-sm">Name<input name="name" required style="display:block; width:100%; margin-top:6px; border-radius:10px; background:#0f1a2a; padding:10px; border:1px solid #26324a" /></label>
+          <label class="block text-sm" style="margin-top:10px">Email<input name="email" type="email" required style="display:block; width:100%; margin-top:6px; border-radius:10px; background:#0f1a2a; padding:10px; border:1px solid #26324a" /></label>
+          <label class="block text-sm" style="margin-top:10px">Message<textarea name="message" rows="5" required style="display:block; width:100%; margin-top:6px; border-radius:10px; background:#0f1a2a; padding:10px; border:1px solid #26324a"></textarea></label>
+          <button type="submit" class="btn" style="margin-top:12px">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-
+  <footer class="footer-border" style="margin-top:24px">
+    <div class="wrap" style="padding-left:0;padding-right:0">
+      <p style="color:var(--muted); font-size:.95rem">© {new Date().getFullYear()} {site.name}. Built with Astro · Deployed on Netlify.</p>
+    </div>
+  </footer>
+</BaseLayout>
