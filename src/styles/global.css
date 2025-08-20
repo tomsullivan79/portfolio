@@ -128,3 +128,10 @@ li{ margin:.4em 0 }
   border-radius:12px;
   box-shadow: 0 10px 26px rgba(25,105,255,.25);
 }
+
+/* Max-width helper for rounded panels */
+:root { --content-max: 920px; }
+.max-920 { max-width: var(--content-max); margin-left: auto; margin-right: auto; }
+
+/* Vertical spacing between sibling modules */
+.stack-lg { display: grid; gap: 24px; }

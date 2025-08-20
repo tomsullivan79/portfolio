@@ -4,31 +4,32 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 <BaseLayout title="PokerScout — Portfolio 2025">
   <!-- HERO -->
-  <header class="hero">
-    <div>
-      <div class="kicker">Portfolio 2025</div>
-      <h1 style="margin:6px 0 10px; font-size:2.1rem">PokerScout</h1>
-      <ul class="meta">
-        <li class="chip">AI / LLM</li>
-        <li class="chip">Agent.AI Workflow</li>
-        <li class="chip">Prompt Engineering</li>
-        <li class="chip">Analytics</li>
-      </ul>
-    </div>
-    <div>
-      <a class="btn" href="https://agent.ai/agent/PokerScout" target="_blank" rel="noopener" aria-label="Open PokerScout" style="margin-top:6px; display:inline-flex">
-        Open PokerScout
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-left:4px">
-          <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M21 3l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M5 12v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </a>
-    </div>
-  </header>
+<header class="hero max-920">
+  <div>
+    <div class="kicker">Portfolio 2025</div>
+    <h1 style="margin:6px 0 10px; font-size:2.1rem">PokerScout</h1>
+    <ul class="meta">
+      <li class="chip">AI / LLM</li>
+      <li class="chip">Agent.AI Workflow</li>
+      <li class="chip">Prompt Engineering</li>
+      <li class="chip">Analytics</li>
+    </ul>
+
+    <!-- Button now directly below the tags -->
+    <a class="btn" href="https://agent.ai/agent/PokerScout" target="_blank" rel="noopener"
+       aria-label="Open PokerScout" style="margin-top:12px; display:inline-flex">
+      Open PokerScout
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-left:4px">
+        <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M21 3l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M5 12v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+</header>
 
   <!-- CONTENT -->
-  <section class="section">
+  <section class="section stack-lg max-920">
     <!-- Project Overview -->
     <article class="card" id="overview">
       <h2>Project Overview</h2>
