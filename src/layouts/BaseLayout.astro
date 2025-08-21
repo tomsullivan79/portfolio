@@ -23,7 +23,7 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
       function gtag(){ dataLayer.push(arguments); }
       gtag('js', new Date());
       // Use the injected variable directly (no quotes, no braces)
-      gtag('config', GA_ID, { debug_mode: true });
+      gtag('config', GA_ID);
     </script>
   </>
 )}
