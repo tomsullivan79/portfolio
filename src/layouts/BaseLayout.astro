@@ -53,7 +53,7 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
       .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     </style>
   </head>
-  <body>
+  <body>``
     <header class="site-header">
       <nav class="site-nav wrap">
         <a class="brand" href="/">Tom Sullivan</a>
@@ -90,19 +90,33 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
       })();
     </script>
 
-    <script is:inline>
-      // Click tracking for elements with data-event="..."
-      document.addEventListener('click', (e) => {
-        const el = e.target.closest('[data-event]');
-        if (!el || typeof gtag !== 'function') return;
-        const name = el.getAttribute('data-event');
-        const params = {
-          link_url: el.href || null,
-          link_text: (el.textContent || '').trim().slice(0, 80),
-          location: window.location.pathname
-        };
-        gtag('event', name, params);
+   <script is:inline>
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest('[data-event]');
+    if (!el || typeof gtag !== 'function') return;
+
+    const sameTab = el.tagName === 'A' && !el.getAttribute('target');
+    const name = el.getAttribute('data-event');
+    const params = {
+      link_url: el.href || null,
+      link_text: (el.textContent || '').trim().slice(0, 80),
+      location: window.location.pathname,
+      transport_type: 'beacon',
+    };
+
+    if (sameTab) {
+      e.preventDefault();
+      const href = el.href;
+      let done = false;
+      gtag('event', name, {
+        ...params,
+        event_callback: () => { if (!done) { done = true; window.location.href = href; } }
       });
+      setTimeout(() => { if (!done) window.location.href = href; }, 500); // fallback
+    } else {
+      gtag('event', name, params);
+    }
+  });
 </script>
 
 
