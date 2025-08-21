@@ -64,9 +64,14 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
           <li><a class:list={{active:isActive("/")}} href="/">Home</a></li>
           <li><a class:list={{active:isActive("/#projects")}} href="/#projects">Projects</a></li>
           <li><a class:list={{active:isActive("/#about")}} href="/#about">About</a></li>
-          <!--<li><a class:list={{active:isActive("/#contact")}} href="/#contact">Contact</a></li>-->
+          <!--<li><a class:list={{active:isActive("/#contact")}} href="/#contact">Contact</a></li>
+          <li>
+  <a href="https://github.com/tomsullivan79" target="_blank" rel="noopener" title="GitHub" data-event="nav_github">GH</a>
+</li>
+          
+          -->
 <li>
-  <a href="https://www.linkedin.com/in/work-with-tom-sullivan/" target="_blank" rel="noopener" title="LinkedIn">LI</a>
+  <a href="https://www.linkedin.com/in/work-with-tom-sullivan/" target="_blank" rel="noopener" title="LinkedIn" data-event="nav_linkedin" >LI</a>
 </li>
         </ul>
       </nav>
@@ -84,5 +89,22 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
         btn.addEventListener('click',()=>{const open=list.classList.toggle('open'); btn.setAttribute('aria-expanded',open?'true':'false');});
       })();
     </script>
+
+    <script is:inline>
+      // Click tracking for elements with data-event="..."
+      document.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-event]');
+        if (!el || typeof gtag !== 'function') return;
+        const name = el.getAttribute('data-event');
+        const params = {
+          link_url: el.href || null,
+          link_text: (el.textContent || '').trim().slice(0, 80),
+          location: window.location.pathname
+        };
+        gtag('event', name, params);
+      });
+</script>
+
+
   </body>
 </html>
