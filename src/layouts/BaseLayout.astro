@@ -14,19 +14,17 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-{ENABLE_GA && (
-  <>
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-    <script is:inline>
-      {`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${GA_ID}', { debug_mode: true });
-      `}
-    </script>
-  </>
-)}
+        {ENABLE_GA && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+            <script is:inline>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '{GA_ID}', { debug_mode: true });
+            </script>
+          </>
+        )}
 
 
     <title>{title}</title>
