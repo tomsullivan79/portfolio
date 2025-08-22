@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Range Sage — Portfolio 2025">
+  <!-- HERO -->
+  <header class="hero max-920">
+    <div>
+      <div class="kicker">Portfolio 2025</div>
+      <h1 style="margin:6px 0 10px; font-size:2.1rem">Range Sage</h1>
+      <ul class="meta">
+        <li class="chip">AI / LLM</li>
+        <li class="chip">NLHE</li>
+        <li class="chip">Coaching</li>
+        <li class="chip">Game theory</li>
+        <li class="chip">Data parsing</li>
+      </ul>
+
+      <!-- Primary action -->
+      <a
+        class="btn"
+        href=""
+        target="_blank"
+        rel="noopener"
+        aria-label="Open Live Demo for Range Sage"
+        style="margin-top:12px; display:inline-flex"
+        data-event="open_rangesage"
+      >
+        Open Live Demo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-left:4px">
+          <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M21 3l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 12v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <section class="section stack-lg max-920">
+    <!-- Project Overview -->
+    <article class="card" id="overview">
+      <h2>Project Overview</h2>
+      <p>
+        Range Sage is an AI poker coach for No-Limit Hold’em that provides structured coaching using equilibrium baselines
+        with optional exploit adjustments. It accepts plain questions or Poker Hand History (PHH) inputs and returns compact,
+        decision-ready analyses with drills. It produces session artifacts—study summaries, progress records, and a leak
+        tracker—for continuity and review, and enforces privacy and scope guardrails (NLHE-only, paraphrased knowledge use).
+      </p>
+    </article>
+
+    <!-- Genesis -->
+    <article class="card" id="genesis">
+      <h2>Genesis</h2>
+      <p>
+        Many players struggle to translate solver concepts (polarized vs. condensed ranges, MDF, bluff:value ratios) into
+        table-speed decisions. Existing tools often overwhelm with raw game trees; learners benefit more from concise recipes,
+        drills, and consistent naming. Range Sage operationalizes equilibrium math and exploit heuristics into a teachable,
+        repeatable workflow with persistent records.
+      </p>
+    </article>
+
+    <!-- Scope -->
+    <article class="card" id="scope">
+      <h2>Scope</h2>
+      <ul>
+        <li><b>Agent workflow design (platform workflow):</b> Session start calibrates stakes/pool, brevity, and math mode; sets coach mode (GTO, Exploit, Hybrid). Intake path: input → (optional) PHH validation → analysis (snapshot, ranges, line, alternatives) → drills/records → file outputs. Recognized commands streamline use (e.g., “analyze these hands,” “assign drills,” “save progress,” “produce a study summary”).</li>
+
+        <li><b>Prompt engineering (rules/spec authoring):</b> Deterministic instructions with explicit capabilities, coach modes, response-depth toggles, and safety constraints. File-output and naming contracts for summaries and progress logs ensure reproducibility. Guardrails include NLHE-only scope, paraphrase-only knowledge use, and an “ask one question or proceed with assumptions” policy.</li>
+
+        <li><b>Information extraction (data ingestion/parsing):</b> Accepts PHH TOML (with YAML/JSON mirrors) as authoritative, including multi-hand inputs. Validator checklist covers players, stacks/blinds, card uniqueness, and action legality; issues are flagged succinctly. Stable Hand IDs and tags are assigned for cross-referencing analysis, drills, and records.</li>
+
+        <li><b>Domain logic &amp; modeling (business logic):</b> Teaches and applies core equilibrium math: MDF <code>P/(P+B)</code>, bluff:value <code>B:(P+B)</code>, and bluff fraction <code>B/(P+2B)</code>. Operationalizes range-shape rules (polarized bets vs. condensed checks), blocker heuristics, and raising dynamics. Provides an exploit framework: start from GTO, make a specific read, map to deviations, scale by confidence.</li>
+
+        <li><b>Presentation &amp; UX:</b> Compact per-hand output: snapshot, range view, line selection with rationale, close alternatives, flagged leaks, and one actionable drill. Progress artifacts include a machine-readable JSON record plus a concise Markdown summary; a leak tracker is maintained in JSON with a quick-scan table. Micro-drills (“range reps”) and competency snapshots support practice and longitudinal tracking.</li>
+
+        <li><b>Quality &amp; robustness (testing/ops):</b> Defensive intake with PHH sanity checks and clear assumptions when fields are missing. Stable IDs, ISO dates, and strict file naming enable reproducibility across sessions and exports. Privacy discipline and educational-only disclaimers reduce misuse and maintain trust.</li>
+      </ul>
+    </article>
+
+    <!-- Skills Demonstrated -->
+    <article class="card" id="skills">
+      <h2>Skills Demonstrated</h2>
+      <ul>
+        <li><b>AI/LLM:</b> Instruction design, guardrailed prompting, controllable depth and math modes.</li>
+        <li><b>Data parsing:</b> PHH TOML ingestion, legality checks, normalized outputs.</li>
+        <li><b>Analytics &amp; modeling:</b> MDF, bluff:value ratios, blocker logic, polarized vs. condensed planning.</li>
+        <li><b>Product thinking:</b> Commands, artifacts, and drill design aligned to learner workflow.</li>
+        <li><b>Frontend output:</b> Clear Markdown tables/records and downloadable text artifacts.</li>
+        <li><b>Ops &amp; QA:</b> Deterministic naming, ISO dating, and validation checklists.</li>
+      </ul>
+    </article>
+
+    <!-- Deliverables -->
+    <article class="card" id="deliverables">
+      <h2>Deliverables</h2>
+      <ul>
+        <li><b>Coaching instruction spec:</b> Capabilities, modes, commands, privacy/scope rules, and file-naming contracts.</li>
+        <li><b>Knowledge base digest:</b> Equilibrium math, range-shape doctrine, raising dynamics, and exploit heuristics.</li>
+        <li><b>Internal spec &amp; templates (v1):</b> PHH validator, Progress Record JSON/Markdown, Leak Tracker JSON/table, Hand ID schema.</li>
+        <li><b>Sample PHH hand &amp; guidance:</b> Authoritative TOML example and intake notes for users.</li>
+        <li><b>Drill framework:</b> Range reps and competency snapshot structure for targeted practice and tracking.</li>
+      </ul>
+    </article>
+  </section>
+</BaseLayout>
