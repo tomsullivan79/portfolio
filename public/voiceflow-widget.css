@@ -1,0 +1,11 @@
+/* Force light scheme inside the widget, regardless of the page */
+:root, .vfrc-widget, .vfrc-chat { color-scheme: light !important; }
+
+/* Hard override the input styling */
+.vfrc-chat-input textarea {
+  background-color: #ffffff !important;
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important; /* Safari/WebKit */
+  caret-color: #111111 !important;
+}
+.vfrc-chat-input textarea::placeholder { color: #6b7280 !important; }

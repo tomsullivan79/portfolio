@@ -371,7 +371,10 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
       verify:   { projectID: '68939b3eec276868887c6c7a' },
       url:      'https://general-runtime.voiceflow.com',
       versionID:'production',
-      voice:    { url: 'https://runtime-api.voiceflow.com' }
+      voice:    { url: 'https://runtime-api.voiceflow.com' },
+      assistant: {
+          stylesheet: '/voiceflow-widget.css'  // <- our overrides live here
+        }
     });
 
     // Wait until open() exists, then signal ready
