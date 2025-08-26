@@ -351,7 +351,7 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   // Guard: never load/initialize twice (prevents cross-page conflicts)
   if (window.__vfLoaded) return;
 
-  var askBtn = d.getElementById('ask-sage-btn');
+  const askBtn = d.getElementById('ask-sage-btn');
   if (!askBtn) {
     // No button on this page → do nothing
     return;
@@ -362,26 +362,26 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   // Helper: broadcast when chat API is ready
   function vfReady() { d.dispatchEvent(new CustomEvent('vf-ready')); }
 
-  var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+  const v = d.createElement(t), s = d.getElementsByTagName(t)[0];
   v.onload = function () {
     window.voiceflow = window.voiceflow || {};
     window.voiceflow.chat = window.voiceflow.chat || {};
 
-    // Load the widget with persistence disabled and your CSS overrides
+    // Load the widget (no history restore across reloads)
     window.voiceflow.chat.load({
       verify:   { projectID: '68939b3eec276868887c6c7a' },
       url:      'https://general-runtime.voiceflow.com',
       versionID:'production',
       voice:    { url: 'https://runtime-api.voiceflow.com' },
-      userID:   'anon_' + (crypto.randomUUID?.() ?? Math.random().toString(36).slice(2)), // isolate sessions
       assistant: {
-        persistence: 'memory',              // do not restore previous chats
-        stylesheet:  '/voiceflow-widget.css' // your working CSS overrides
+        persistence: 'memory',              // don't restore old chats on page reloads
+        stylesheet:  '/voiceflow-widget.css'
       }
     });
 
     // Wait until open() exists, then signal ready
-    var tries = 0, iv = setInterval(function () {
+    let tries = 0;
+    const iv = setInterval(function () {
       if (window.voiceflow?.chat && typeof window.voiceflow.chat.open === 'function') {
         clearInterval(iv); vfReady();
       } else if (++tries > 60) { clearInterval(iv); } // ~3s
@@ -392,45 +392,75 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   v.type = "text/javascript";
   s.parentNode.insertBefore(v, s);
 
-  // Click-to-open (queues if not ready) + one-shot launch
+  // Click-to-open (no programmatic launch = no loop)
   function openSage(e) {
     e?.preventDefault();
-
-    const doOpenThenLaunch = () => {
+    const doOpen = () => {
       const vf = window.voiceflow?.chat;
       if (!vf || typeof vf.open !== 'function') return;
-
-      // Open the popover
+      vf.show?.();
       vf.open();
-
-      // One-shot launch per click (prevents loops)
-      if (window.__vfLaunchedThisOpen) return;
-      window.__vfLaunchedThisOpen = true;
-
-      // Small delay to ensure session is ready, then send launch
-      setTimeout(() => {
-        if (typeof vf.interact === 'function') {
-          vf.interact({ action: { type: 'launch' } }); // same as "Start New Chat"
-        }
-        // reset the flag shortly after to allow future opens to relaunch fresh
-        setTimeout(() => { window.__vfLaunchedThisOpen = false; }, 500);
-      }, 120);
+      // IMPORTANT: do NOT call vf.interact({ action: { type: 'launch' } }) here.
     };
 
     if (window.voiceflow?.chat && typeof window.voiceflow.chat.open === 'function') {
-      doOpenThenLaunch();
+      doOpen();
     } else {
-      const once = () => {
-        d.removeEventListener('vf-ready', once);
-        doOpenThenLaunch();
-      };
+      const once = () => { d.removeEventListener('vf-ready', once); doOpen(); };
       d.addEventListener('vf-ready', once);
     }
   }
 
   askBtn.addEventListener('click', openSage);
+
+  /* -----------------------------------------------------------
+     OPTIONAL: force a brand-new session every time the button
+     is clicked (heavier, but guaranteed clean slate).
+     Toggle ENABLE_FULL_RESET to true to enable.
+  ------------------------------------------------------------*/
+  const ENABLE_FULL_RESET = false;
+  if (ENABLE_FULL_RESET) {
+    askBtn.removeEventListener('click', openSage);
+    askBtn.addEventListener('click', function (e) {
+      e?.preventDefault();
+
+      // Re-load widget with a fresh userID, then open
+      const reload = () => {
+        const vf = window.voiceflow?.chat;
+        vf?.close?.(); vf?.hide?.();
+
+        // Reinitialize with a new userID (bypasses memory state)
+        window.voiceflow.chat.load({
+          verify:   { projectID: '68939b3eec276868887c6c7a' },
+          url:      'https://general-runtime.voiceflow.com',
+          versionID:'production',
+          voice:    { url: 'https://runtime-api.voiceflow.com' },
+          userID:   'anon_' + (crypto.randomUUID?.() ?? Math.random().toString(36).slice(2)),
+          assistant: {
+            persistence: 'memory',
+            stylesheet:  '/voiceflow-widget.css'
+          }
+        });
+
+        const waitThenOpen = setInterval(() => {
+          if (window.voiceflow?.chat?.open) {
+            clearInterval(waitThenOpen);
+            window.voiceflow.chat.show?.();
+            window.voiceflow.chat.open();
+          }
+        }, 50);
+      };
+
+      if (window.voiceflow?.chat?.open) reload();
+      else {
+        const once = () => { d.removeEventListener('vf-ready', once); reload(); };
+        d.addEventListener('vf-ready', once);
+      }
+    });
+  }
 })(document, 'script');
 </script>
+
 
 
 
