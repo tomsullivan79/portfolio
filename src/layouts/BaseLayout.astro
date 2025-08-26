@@ -35,15 +35,16 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
     <!-- (No manual <link> tag needed; the import above handles it) -->
 
 <style is:global>
-  /* Keep the Voiceflow widget in light mode even if the site is dark */
+  /* Force widget and inputs back into light scheme (overrides global html{color-scheme:dark}) */
   .vfrc-widget,
   .vfrc-widget *,
   .vfrc-launcher,
-  .vfrc-chat {
+  .vfrc-chat,
+  .vfrc-chat-input textarea {
     color-scheme: light !important;
   }
 
-  /* Hard override the input area (wins even if a sitewide input/textarea rule exists) */
+  /* Explicit background/text overrides to beat inherited dark scheme */
   .vfrc-chat-input textarea,
   .vfrc-input textarea,
   .vfrc-chat textarea {
@@ -54,19 +55,20 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
     color: #6b7280 !important;
   }
 
-  /* Voiceflow theme tokens (these help, but some builds still need the hard overrides above) */
+  /* Voiceflow theme tokens (useful for consistent theming) */
   :root,
   .vfrc-widget {
     --vfrc-bg-color: #ffffff;
-    --vfrc-primary: #2e7d32;
+    --vfrc-primary: #2e7d32;          /* your brand green */
     --vfrc-text: #111111;
     --vfrc-user-message-bg: #e8f5ee;
     --vfrc-assistant-message-bg: #f5f7f9;
-    --vfrc-input-background: #ffffff;
-    --vfrc-input-text: #111111;
+    --vfrc-input-background: #ffffff; /* input bar background */
+    --vfrc-input-text: #111111;       /* input text color */
     --vfrc-input-placeholder: #6b7280;
   }
 </style>
+
 
 
 
