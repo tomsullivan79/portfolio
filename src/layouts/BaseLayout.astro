@@ -367,15 +367,33 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
     window.voiceflow = window.voiceflow || {};
     window.voiceflow.chat = window.voiceflow.chat || {};
 
+    // Load the widget with persistence disabled and your CSS overrides
     window.voiceflow.chat.load({
       verify:   { projectID: '68939b3eec276868887c6c7a' },
       url:      'https://general-runtime.voiceflow.com',
       versionID:'production',
       voice:    { url: 'https://runtime-api.voiceflow.com' },
+      userID:   'anon_' + (crypto.randomUUID?.() ?? Math.random().toString(36).slice(2)), // isolate sessions
       assistant: {
-          stylesheet: '/voiceflow-widget.css'  // <- our overrides live here
-        }
+        persistence: 'memory',              // ← do not restore previous chats
+        stylesheet:  '/voiceflow-widget.css' // ← your working CSS overrides
+      }
     });
+
+    // Always start from the beginning when the popover opens
+    if (!window.__vfOpenHooked) {
+      window.__vfOpenHooked = true;
+      window.addEventListener('message', function (evt) {
+        let data = evt.data;
+        if (typeof data === 'string') { try { data = JSON.parse(data); } catch (_) {} }
+        if (data?.type === 'voiceflow:open') {
+          const vf = window.voiceflow?.chat;
+          if (vf && typeof vf.interact === 'function') {
+            vf.interact({ action: { type: 'launch' } }); // same as clicking "Start New Chat"
+          }
+        }
+      }, false);
+    }
 
     // Wait until open() exists, then signal ready
     var tries = 0, iv = setInterval(function () {
@@ -406,6 +424,7 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   askBtn.addEventListener('click', openSage);
 })(document, 'script');
 </script>
+
 
 
   </body>
