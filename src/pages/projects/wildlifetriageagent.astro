@@ -2,98 +2,120 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Range Sage — Portfolio 2025">
+<BaseLayout title="Sage (Wildlife Triage Agent) — Portfolio 2025">
   <!-- HERO -->
   <header class="hero max-920">
     <div>
       <div class="kicker">Portfolio 2025</div>
-      <h1 style="margin:6px 0 10px; font-size:2.1rem">Range Sage</h1>
+      <h1 style="margin:6px 0 10px; font-size:2.1rem">Sage</h1>
       <ul class="meta">
         <li class="chip">AI / LLM</li>
-        <li class="chip">NLHE</li>
-        <li class="chip">Coaching</li>
-        <li class="chip">Game theory</li>
-        <li class="chip">Data parsing</li>
+        <li class="chip">Prompt Engineering</li>
+        <li class="chip">Voiceflow</li>
+        <li class="chip">Conversational Design</li>
+        <li class="chip">Workflow Architecture</li>
+        <li class="chip">Knowledge Base Design</li>
+        <li class="chip">Data Structuring</li>
+        <li class="chip">UX Writing</li>
+        <li class="chip">Branding</li>
       </ul>
 
-      <!-- Primary action -->
-      <a class="btn" href="https://chatgpt.com/g/g-685ca5e933d08191b7e0ad24e8aaa5ef-range-sage" target="_blank" rel="noopener" data-event="open_pokerscout
-       aria-label="Open PokerScout" style="margin-top:12px; display:inline-flex"; data-event="open_rangesage">
-      Open Range Sage
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-left:4px">
-          <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M21 3l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M5 12v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </a>
+    <!-- Primary action -->
+<a id="ask-sage-btn"
+   class="btn"
+   href="#ask-sage"
+   role="button"
+   aria-label="Ask Sage (opens chat)"
+   style="margin-top:12px; display:inline-flex"
+   data-event="open_sage">
+  Ask Sage
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="margin-left:4px">
+    <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M21 3l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5 12v7h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</a>
+
     </div>
   </header>
 
-  <!-- CONTENT -->
-  <section class="section stack-lg max-920">
-    <!-- Project Overview -->
-    <article class="card" id="overview">
-      <h2>Project Overview</h2>
-      <p>
-        Range Sage is an AI poker coach for No-Limit Hold’em that provides structured coaching using equilibrium baselines
-        with optional exploit adjustments. It accepts plain questions or Poker Hand History (PHH) inputs and returns compact,
-        decision-ready analyses with drills. It produces session artifacts—study summaries, progress records, and a leak
-        tracker—for continuity and review, and enforces privacy and scope guardrails (NLHE-only, paraphrased knowledge use).
-      </p>
-    </article>
+<!-- CONTENT -->
+<section class="section stack-lg max-920">
+  <!-- Project Overview -->
+  <article class="card" id="overview">
+    <h2>Project Overview</h2>
+    <p>
+      The Wildlife Rescue &amp; Triage Agent (“Sage”) is an AI-powered conversational agent built in Voiceflow 
+      that combines receptionist and wildlife triage functions for the Wildlife Rehabilitation Center of Minnesota 
+      (WRC). Sage greets callers or web users, determines whether the Center is open or closed, and guides them through 
+      a structured intake process to classify the situation. Based on the animal’s species, condition, and risk factors, 
+      it provides species-specific triage advice and prepares the case for appropriate routing. <br><br>
+
+      This project demonstrates how conversational AI can extend the reach of busy non-profits by offering accurate, 
+      structured, and empathetic first contact support 24/7, helping rescuers act quickly and safely until professional 
+      staff are available.
+    </p>
+  </article>
 
     <!-- Genesis -->
     <article class="card" id="genesis">
       <h2>Genesis</h2>
-      <p>
-        Many players struggle to translate solver concepts (polarized vs. condensed ranges, MDF, bluff:value ratios) into
-        table-speed decisions. Existing tools often overwhelm with raw game trees; learners benefit more from concise recipes,
-        drills, and consistent naming. Range Sage operationalizes equilibrium math and exploit heuristics into a teachable,
-        repeatable workflow with persistent records.
-      </p>
+    <p>
+      The idea for Sage originated after a personal wildlife rescue experience. When a bat was found that appeared 
+      sick or injured, staff at the Wildlife Rehabilitation Center of Minnesota (WRC) were fully occupied and unavailable 
+      by phone. The urgency of the situation required independent action—safely containing the bat in a ventilated 
+      cardboard box and transporting it directly to WRC. That moment highlighted a gap: rescuers often need immediate, 
+      high-quality guidance when staff are unavailable. <br><br>
+
+      Sage was conceived to fill that gap. By encoding triage logic, species-specific guidance, and WRC’s operational 
+      context into an AI agent, the goal was to create a digital first responder—always available, calm, and accurate—helping 
+      people make the right decisions when encountering wild animals.
+    </p>
     </article>
 
-    <!-- Scope -->
-    <article class="card" id="scope">
-      <h2>Scope</h2>
-      <ul>
-        <li><b>Agent workflow design (platform workflow):</b> Session start calibrates stakes/pool, brevity, and math mode; sets coach mode (GTO, Exploit, Hybrid). Intake path: input → (optional) PHH validation → analysis (snapshot, ranges, line, alternatives) → drills/records → file outputs. Recognized commands streamline use (e.g., “analyze these hands,” “assign drills,” “save progress,” “produce a study summary”).</li>
+ <!-- Scope -->
+<article class="card" id="scope">
+  <h2>Scope</h2>
+  <ul>
+    <li><b>Agent workflow design (platform workflow):</b> Built native workflows, variables, and agent architecture in Voiceflow to support intake, routing, and escalation logic across receptionist and triage functions.</li>
 
-        <li><b>Prompt engineering (rules/spec authoring):</b> Deterministic instructions with explicit capabilities, coach modes, response-depth toggles, and safety constraints. File-output and naming contracts for summaries and progress logs ensure reproducibility. Guardrails include NLHE-only scope, paraphrase-only knowledge use, and an “ask one question or proceed with assumptions” policy.</li>
+    <li><b>Prompt engineering (rules/spec authoring):</b> Designed and refined instructions to control conversation flow, enforce safety filters, manage escalation rules, and maintain an empathetic, supportive persona.</li>
 
-        <li><b>Information extraction (data ingestion/parsing):</b> Accepts PHH TOML (with YAML/JSON mirrors) as authoritative, including multi-hand inputs. Validator checklist covers players, stacks/blinds, card uniqueness, and action legality; issues are flagged succinctly. Stable Hand IDs and tags are assigned for cross-referencing analysis, drills, and records.</li>
+    <li><b>Information extraction (data ingestion/parsing):</b> Created a structured species meta knowledge base covering Minnesota wildlife (songbirds, raptors, mammals, reptiles, amphibians) with intervention needs, referral flags, rabies risk, aggression, and care advice.</li>
 
-        <li><b>Domain logic &amp; modeling (business logic):</b> Teaches and applies core equilibrium math: MDF <code>P/(P+B)</code>, bluff:value <code>B:(P+B)</code>, and bluff fraction <code>B/(P+2B)</code>. Operationalizes range-shape rules (polarized bets vs. condensed checks), blocker heuristics, and raising dynamics. Provides an exploit framework: start from GTO, make a specific read, map to deviations, scale by confidence.</li>
+    <li><b>Domain logic &amp; modeling (business logic):</b> Developed a variable framework to encode intake, routing, escalation, and emotional support states, enabling consistent downstream decision-making and case management.</li>
 
-        <li><b>Presentation &amp; UX:</b> Compact per-hand output: snapshot, range view, line selection with rationale, close alternatives, flagged leaks, and one actionable drill. Progress artifacts include a machine-readable JSON record plus a concise Markdown summary; a leak tracker is maintained in JSON with a quick-scan table. Micro-drills (“range reps”) and competency snapshots support practice and longitudinal tracking.</li>
+    <li><b>Presentation &amp; UX:</b> Implemented receptionist logic for open/closed hours handling, time-sensitive advice, and smooth transitions. Integrated persona design, safety-first phrasing, and clear triage question flow to balance empathy with precision.</li>
 
-        <li><b>Quality &amp; robustness (testing/ops):</b> Defensive intake with PHH sanity checks and clear assumptions when fields are missing. Stable IDs, ISO dates, and strict file naming enable reproducibility across sessions and exports. Privacy discipline and educational-only disclaimers reduce misuse and maintain trust.</li>
-      </ul>
-    </article>
+    <li><b>Quality &amp; robustness (testing/ops):</b> Iteratively tested flows, validated metadata handling, and enforced strict species normalization and escalation rules to ensure consistency, reliability, and safety in live use.</li>
+  </ul>
+</article>
+
 
     <!-- Skills Demonstrated -->
     <article class="card" id="skills">
-      <h2>Skills Demonstrated</h2>
-      <ul>
-        <li><b>AI/LLM:</b> Instruction design, guardrailed prompting, controllable depth and math modes.</li>
-        <li><b>Data parsing:</b> PHH TOML ingestion, legality checks, normalized outputs.</li>
-        <li><b>Analytics &amp; modeling:</b> MDF, bluff:value ratios, blocker logic, polarized vs. condensed planning.</li>
-        <li><b>Product thinking:</b> Commands, artifacts, and drill design aligned to learner workflow.</li>
-        <li><b>Frontend output:</b> Clear Markdown tables/records and downloadable text artifacts.</li>
-        <li><b>Ops &amp; QA:</b> Deterministic naming, ISO dating, and validation checklists.</li>
-      </ul>
+  <h2>Skills Demonstrated</h2>
+<ul>
+      <li><b>AI/LLM:</b> Prompt engineering, persona design, and safety-first conversation flow control.</li>
+      <li><b>Conversational architecture:</b> Multi-agent workflow design in Voiceflow with receptionist and triage functions.</li>
+      <li><b>Data structuring:</b> Creation of a structured species meta knowledge base with escalation, risk, and care advice fields.</li>
+      <li><b>Logic &amp; modeling:</b> Variable framework for intake, routing, escalation, and emotional support handling.</li>
+      <li><b>UX writing:</b> Supportive, empathetic phrasing optimized for stressed or uncertain users.</li>
+      <li><b>Branding &amp; UI:</b> Custom colors, chat imagery, and presentation design for a consistent identity.</li>
+      <li><b>Ops &amp; QA:</b> Iterative testing, metadata validation, and enforcement of species normalization and escalation rules.</li>
+</ul>
     </article>
 
     <!-- Deliverables -->
     <article class="card" id="deliverables">
       <h2>Deliverables</h2>
-      <ul>
-        <li><b>Coaching instruction spec:</b> Capabilities, modes, commands, privacy/scope rules, and file-naming contracts.</li>
-        <li><b>Knowledge base digest:</b> Equilibrium math, range-shape doctrine, raising dynamics, and exploit heuristics.</li>
-        <li><b>Internal spec &amp; templates (v1):</b> PHH validator, Progress Record JSON/Markdown, Leak Tracker JSON/table, Hand ID schema.</li>
-        <li><b>Sample PHH hand &amp; guidance:</b> Authoritative TOML example and intake notes for users.</li>
-        <li><b>Drill framework:</b> Range reps and competency snapshot structure for targeted practice and tracking.</li>
-      </ul>
+        <ul>
+          <li><b>Agent prompt &amp; persona design:</b> Full instructions for Sage, covering triage flow, receptionist logic, and safety rules.</li>
+          <li><b>Species Meta Knowledge Base:</b> Structured dataset of Minnesota wildlife with identification keywords, escalation rules, and care advice.</li>
+          <li><b>Variable framework:</b> System of variables to support intake, routing, escalation, emotional support, and case tracking.</li>
+          <li><b>Conversation workflows:</b> Voiceflow implementation of intake, routing, and escalation logic for end-to-end agent functionality.</li>
+          <li><b>Custom branding &amp; UI assets:</b> Sage’s chat interface colors, imagery, and visual identity design.</li>
+        </ul>
     </article>
   </section>
 </BaseLayout>

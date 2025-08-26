@@ -197,6 +197,68 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
 </script>
 
 
+<style is:global>
+  /* Optional: hide Voiceflow's default launcher globally */
+  .vfrc-launcher { display: none !important; }
+</style>
+
+<script is:inline>
+(function (d, t) {
+  // Guard: never load/initialize twice (prevents cross-page conflicts)
+  if (window.__vfLoaded) return;
+
+  var askBtn = d.getElementById('ask-sage-btn');
+  if (!askBtn) {
+    // No button on this page → do nothing
+    return;
+  }
+
+  window.__vfLoaded = true;
+
+  // Helper: broadcast when chat API is ready
+  function vfReady() { d.dispatchEvent(new CustomEvent('vf-ready')); }
+
+  var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+  v.onload = function () {
+    window.voiceflow = window.voiceflow || {};
+    window.voiceflow.chat = window.voiceflow.chat || {};
+
+    window.voiceflow.chat.load({
+      verify:   { projectID: '68939b3eec276868887c6c7a' },
+      url:      'https://general-runtime.voiceflow.com',
+      versionID:'production',
+      voice:    { url: 'https://runtime-api.voiceflow.com' }
+    });
+
+    // Wait until open() exists, then signal ready
+    var tries = 0, iv = setInterval(function () {
+      if (window.voiceflow?.chat && typeof window.voiceflow.chat.open === 'function') {
+        clearInterval(iv); vfReady();
+      } else if (++tries > 60) { clearInterval(iv); } // ~3s
+    }, 50);
+  };
+
+  v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+  v.type = "text/javascript";
+  s.parentNode.insertBefore(v, s);
+
+  // Click-to-open (queues if not ready)
+  function openSage(e) {
+    e?.preventDefault();
+    if (window.voiceflow?.chat && typeof window.voiceflow.chat.open === 'function') {
+      window.voiceflow.chat.open();
+    } else {
+      const once = () => {
+        d.removeEventListener('vf-ready', once);
+        window.voiceflow?.chat?.open && window.voiceflow.chat.open();
+      };
+      d.addEventListener('vf-ready', once);
+    }
+  }
+
+  askBtn.addEventListener('click', openSage);
+})(document, 'script');
+</script>
 
 
   </body>
