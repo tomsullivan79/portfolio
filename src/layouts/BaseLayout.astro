@@ -34,6 +34,31 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
 
     <!-- (No manual <link> tag needed; the import above handles it) -->
 
+<style is:global>
+  /* Force Voiceflow widget into light mode, overriding site dark mode */
+  .vfrc-widget,
+  .vfrc-launcher,
+  .vfrc-chat {
+    color-scheme: light;
+  }
+
+  /* Voiceflow widget theme tokens */
+  :root {
+    --vfrc-bg-color: #ffffff;
+    --vfrc-primary: #2e7d32;          /* your brand green */
+    --vfrc-text: #111111;
+    --vfrc-user-message-bg: #e8f5ee;
+    --vfrc-assistant-message-bg: #f5f7f9;
+    --vfrc-input-background: #ffffff; /* fixes the black bar issue */
+    --vfrc-input-text: #111111;
+    --vfrc-input-placeholder: #6b7280;
+  }
+</style>
+
+
+
+
+
     <style>
       .site-header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--panel) 92%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
       .site-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px}
