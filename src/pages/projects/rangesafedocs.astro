@@ -1,0 +1,43 @@
+---
+/**
+ * Path: src/pages/projects/rangesagedocs.astro
+ * Route: /projects/rangesagedocs
+ */
+
+// import Layout from "../../layouts/BaseLayout.astro"; // adjust if you use a layout
+
+export const prerender = true;
+
+const pageTitle = "Range Sage — User Guide";
+const pageDescription =
+  "How to use Range Sage: capabilities, PHH, workflows, progress tracking, drills, and commands.";
+---
+
+<!-- If you have a Layout, wrap the content with it. Otherwise keep the head + article below. -->
+<head>
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+</head>
+
+<article class="prose prose-invert max-w-3xl mx-auto px-4 py-10">
+  <header class="mb-8">
+    <h1 class="mb-2">{pageTitle}</h1>
+    <p class="opacity-80">
+      v1 user documentation. <a href="/projects/range-sage-user-guide-v1.pdf">Download the PDF</a>.
+    </p>
+  </header>
+
+  <!-- Paste the full docs content you already approved here (same sections as before:
+       Quick start, PHH, Analysis shape, Modes, Progress, Practice, Troubleshooting, FAQ, Tips, Glossary, Commands). -->
+</article>
+
+<style>
+  :root { color-scheme: dark; }
+  article { line-height: 1.7; }
+  h1, h2, h3 { line-height: 1.25; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+  pre { overflow: auto; padding: 1rem; border-radius: 0.5rem; background: rgba(255,255,255,0.06); }
+  a { text-decoration: underline; text-underline-offset: 2px; }
+  details summary { list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+</style>

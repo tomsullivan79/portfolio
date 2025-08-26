@@ -144,3 +144,6 @@ li{ margin:.4em 0 }
 .stack-lg { display: grid; gap: 24px; }
 
 
+[id] { scroll-margin-top: 72px; }
+
+#contact { scroll-margin-top: 72px; }  /* adjust if your header height differs */

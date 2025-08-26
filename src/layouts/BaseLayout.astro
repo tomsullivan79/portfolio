@@ -61,11 +61,11 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
           <span class="sr-only">Toggle menu</span> ☰
         </button>
         <ul id="primary-nav" class="links">
-          <li><a class:list={{active:isActive("/")}} href="/">Home</a></li>
-          <li><a class:list={{ active: isActive("/#focus") }} href="/#focus">Current Focus</a></li>
-          <li><a class:list={{active:isActive("/#projects")}} href="/#projects">Projects</a></li>
-          <li><a class:list={{active:isActive("/#about")}} href="/#about">About</a></li>
-          <li><a class:list={{active:isActive("/#contact")}} href="/#contact">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#focus">Current Focus</a></li>
+          <li><a href="/#projects">Projects</a></li>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#contact">Contact</a></li>
           <!--<li><a class:list={{active:isActive("/#contact")}} href="/#contact">Contact</a></li>
           <li>
   <a href="https://github.com/tomsullivan79" target="_blank" rel="noopener" title="GitHub" data-event="nav_github">GH</a>
@@ -144,6 +144,58 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
 
   pairs.forEach(([, sec]) => io.observe(sec));
 </script>
+
+
+<script is:inline>
+  (function () {
+    const nav = document.querySelector('.links');
+    if (!nav) return;
+
+    // Grab all in-page nav links like "/#section"
+    const sectionLinks = Array.from(nav.querySelectorAll('a[href^="/#"]'));
+    if (!sectionLinks.length) return;
+
+    // Map each section element -> nav link
+    const pairs = sectionLinks.map(a => {
+      const id = a.getAttribute('href').slice(2); // "/#focus" -> "focus"
+      return [a, document.getElementById(id)];
+    }).filter(([, sec]) => !!sec);
+
+    const setActive = (link) => {
+      // Remove active from ALL nav links (including Home)
+      nav.querySelectorAll('a').forEach(x => x.classList.remove('active'));
+      link?.classList.add('active');
+    };
+
+    // Highlight the first (Home) on initial load at top
+    if (window.scrollY < 10) setActive(sectionLinks[0]);
+
+    // Observe sections as they enter near the top of the viewport
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const link = pairs.find(([, sec]) => sec === e.target)?.[0];
+          if (link) setActive(link);
+        }
+      });
+    }, {
+      // account for sticky header; trigger earlier so short pages still activate
+      rootMargin: '-64px 0px -80% 0px',
+      threshold: 0
+    });
+
+    pairs.forEach(([, sec]) => io.observe(sec));
+
+    // Bottom-of-page fallback: ensure the last section highlights even if it never intersects
+    const lastLink = sectionLinks[sectionLinks.length - 1];
+    const onScroll = () => {
+      const atBottom = window.innerHeight + window.scrollY >= (document.documentElement.scrollHeight - 2);
+      if (atBottom && lastLink) setActive(lastLink);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
 
 
 
