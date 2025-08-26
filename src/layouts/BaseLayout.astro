@@ -92,6 +92,110 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
       .wrap{ max-width: var(--site-max); margin: 0 auto; padding: 24px; }
       .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     </style>
+
+
+<!-- 1) Strong page-level CSS overrides (covers non-iframe builds & Safari) -->
+<style is:global>
+  /* Force the widget subtree to light scheme, even if html{color-scheme:dark} */
+  .vfrc-widget,
+  .vfrc-widget *,
+  .vfrc-launcher,
+  .vfrc-chat {
+    color-scheme: light !important;
+  }
+
+  /* Hard overrides for the input (non-iframe builds) */
+  .vfrc-chat-input textarea,
+  .vfrc-input textarea,
+  .vfrc-chat textarea {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important; /* Safari/WebKit */
+    caret-color: #111111 !important;
+    outline: none; /* optional */
+  }
+  .vfrc-chat-input textarea::placeholder {
+    color: #6b7280 !important;
+  }
+
+  /* Voiceflow theme tokens (if the build consumes CSS vars) */
+  :root,
+  .vfrc-widget {
+    --vfrc-bg-color: #ffffff;
+    --vfrc-primary: #2e7d32;
+    --vfrc-text: #111111;
+    --vfrc-user-message-bg: #e8f5ee;
+    --vfrc-assistant-message-bg: #f5f7f9;
+    --vfrc-input-background: #ffffff;
+    --vfrc-input-text: #111111;
+    --vfrc-input-placeholder: #6b7280;
+  }
+</style>
+
+<!-- 2) If the widget renders inside an iframe, inject CSS into the iframe -->
+<script is:inline>
+  (function () {
+    // Run after the widget loads; if you used my vf-ready event, this will fire after, too.
+    function injectIntoVF() {
+      // Try to find the Voiceflow widget iframe
+      const vfIframe =
+        document.querySelector('iframe[src*="voiceflow"]') ||
+        document.querySelector('iframe[id*="vfrc"], iframe[class*="vfrc"]');
+
+      if (!vfIframe) return false;
+
+      const doc = vfIframe.contentDocument || vfIframe.contentWindow?.document;
+      if (!doc || !doc.head) return false;
+
+      // Create a <style> inside the iframe to force the input to light background
+      const style = doc.createElement('style');
+      style.textContent = `
+        :root, .vfrc-widget, .vfrc-chat { color-scheme: light !important; }
+        .vfrc-chat-input textarea,
+        .vfrc-input textarea,
+        .vfrc-chat textarea,
+        textarea {
+          background-color: #ffffff !important;
+          color: #111111 !important;
+          -webkit-text-fill-color: #111111 !important;
+          caret-color: #111111 !important;
+        }
+        .vfrc-chat-input textarea::placeholder { color: #6b7280 !important; }
+        :root {
+          --vfrc-input-background: #ffffff !important;
+          --vfrc-input-text: #111111 !important;
+          --vfrc-input-placeholder: #6b7280 !important;
+          --vfrc-bg-color: #ffffff !important;
+          --vfrc-text: #111111 !important;
+        }
+      `;
+      doc.head.appendChild(style);
+      return true;
+    }
+
+    // Try now…
+    if (injectIntoVF()) return;
+
+    // …or keep trying briefly (widget mounts async)
+    const deadline = Date.now() + 5000; // try for up to 5s
+    const iv = setInterval(() => {
+      if (injectIntoVF() || Date.now() > deadline) clearInterval(iv);
+    }, 150);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
   </head>
   <body>
     <header class="site-header">
