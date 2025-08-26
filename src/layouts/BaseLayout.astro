@@ -375,25 +375,10 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
       voice:    { url: 'https://runtime-api.voiceflow.com' },
       userID:   'anon_' + (crypto.randomUUID?.() ?? Math.random().toString(36).slice(2)), // isolate sessions
       assistant: {
-        persistence: 'memory',              // ← do not restore previous chats
-        stylesheet:  '/voiceflow-widget.css' // ← your working CSS overrides
+        persistence: 'memory',              // do not restore previous chats
+        stylesheet:  '/voiceflow-widget.css' // your working CSS overrides
       }
     });
-
-    // Always start from the beginning when the popover opens
-    if (!window.__vfOpenHooked) {
-      window.__vfOpenHooked = true;
-      window.addEventListener('message', function (evt) {
-        let data = evt.data;
-        if (typeof data === 'string') { try { data = JSON.parse(data); } catch (_) {} }
-        if (data?.type === 'voiceflow:open') {
-          const vf = window.voiceflow?.chat;
-          if (vf && typeof vf.interact === 'function') {
-            vf.interact({ action: { type: 'launch' } }); // same as clicking "Start New Chat"
-          }
-        }
-      }, false);
-    }
 
     // Wait until open() exists, then signal ready
     var tries = 0, iv = setInterval(function () {
@@ -407,15 +392,37 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   v.type = "text/javascript";
   s.parentNode.insertBefore(v, s);
 
-  // Click-to-open (queues if not ready)
+  // Click-to-open (queues if not ready) + one-shot launch
   function openSage(e) {
     e?.preventDefault();
+
+    const doOpenThenLaunch = () => {
+      const vf = window.voiceflow?.chat;
+      if (!vf || typeof vf.open !== 'function') return;
+
+      // Open the popover
+      vf.open();
+
+      // One-shot launch per click (prevents loops)
+      if (window.__vfLaunchedThisOpen) return;
+      window.__vfLaunchedThisOpen = true;
+
+      // Small delay to ensure session is ready, then send launch
+      setTimeout(() => {
+        if (typeof vf.interact === 'function') {
+          vf.interact({ action: { type: 'launch' } }); // same as "Start New Chat"
+        }
+        // reset the flag shortly after to allow future opens to relaunch fresh
+        setTimeout(() => { window.__vfLaunchedThisOpen = false; }, 500);
+      }, 120);
+    };
+
     if (window.voiceflow?.chat && typeof window.voiceflow.chat.open === 'function') {
-      window.voiceflow.chat.open();
+      doOpenThenLaunch();
     } else {
       const once = () => {
         d.removeEventListener('vf-ready', once);
-        window.voiceflow?.chat?.open && window.voiceflow.chat.open();
+        doOpenThenLaunch();
       };
       d.addEventListener('vf-ready', once);
     }
@@ -424,6 +431,7 @@ const ENABLE_GA = import.meta.env.PROD && !!GA_ID;
   askBtn.addEventListener('click', openSage);
 })(document, 'script');
 </script>
+
 
 
 
