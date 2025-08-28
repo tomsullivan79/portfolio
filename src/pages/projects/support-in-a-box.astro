@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Support-in-a-Box (CX Ops Demo) — Portfolio 2025">
+  <!-- HERO -->
+  <header class="hero max-920">
+    <div>
+      <div class="kicker">Portfolio 2025</div>
+      <h1 style="margin:6px 0 10px; font-size:2.1rem">Support-in-a-Box (CX Ops Demo)</h1>
+      <ul class="meta">
+        <li class="chip">CX Operations</li>
+        <li class="chip">Process Design</li>
+        <li class="chip">AI / LLM</li>
+        <li class="chip">Google Apps Script</li>
+        <li class="chip">Google Sheets</li>
+        <li class="chip">Google Forms</li>
+        <li class="chip">Slack</li>
+        <li class="chip">Gmail</li>
+        <li class="chip">Notion</li>
+        <li class="chip">Automation</li>
+        <li class="chip">Metrics</li>
+      </ul>
+
+      <!-- Primary CTAs -->
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+        <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeNaLp0r2qiK85_GeFJKdeGEZ68xdWj-4GlJzE3ysCnPyET8w/viewform?usp=header" target="_blank" rel="noreferrer">Open Intake Form</a>
+        <a class="btn" href="https://docs.google.com/spreadsheets/d/1LDS6l6HrjDP4vgOjsOG_t1gSJMwpLMB7VL8hq_S-oEw/edit?usp=sharing" target="_blank" rel="noreferrer">View Live Tickets Sheet</a>
+        <a class="btn" href="https://www.notion.so/Runbook-Spreadsheet-Connector-Auth-Error-25c9f783369680448668d2d286c40903?source=copy_link" target="_blank" rel="noreferrer">KB Home (Notion)</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <section class="section stack-lg max-920">
+    <!-- Overview -->
+    <article class="card" id="overview">
+      <h2>Project Overview</h2>
+      <p>
+        Support-in-a-Box is a compact CX operations stack built with free tools to demonstrate how to
+        <em>design, document, and implement</em> scalable support processes, <em>automate</em> first-response workflows with AI,
+        and <em>monitor</em> the key health metrics (FRT, TTR, FCR, CSAT, NPS). It uses Google Forms for intake and CSAT,
+        Google Sheets for the working queue + dashboard, Apps Script for logic and integrations, Slack for alerts,
+        Gmail for messaging, and Notion for a lightweight runbook/KB.
+      </p>
+      <ul class="bullets-tight">
+        <li><b>Goal:</b> Show end-to-end CX ops capability under tight scope—hands-on process design, automation, and reporting.</li>
+        <li><b>Role:</b> Solo build—requirements, UX flows, implementation, QA, and documentation.</li>
+        <li><b>Outcome:</b> A working demo with AI acknowledgments, Slack alerts, idempotent ticket creation, CSAT write-backs, and 30-day metrics.</li>
+      </ul>
+    </article>
+
+    <!-- Demo Flow -->
+    <article class="card" id="demo-flow">
+      <h2>How the Demo Works</h2>
+      <ol>
+        <li><b>Submit Issue:</b> User fills the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNaLp0r2qiK85_GeFJKdeGEZ68xdWj-4GlJzE3ysCnPyET8w/viewform?usp=header" target="_blank" rel="noreferrer">Intake Form</a>.</li>
+        <li><b>Slack Alert:</b> Apps Script posts a formatted ticket summary to a Slack channel.</li>
+        <li><b>AI Acknowledgment:</b> An email is sent via Gmail with a friendly AI-drafted ack + relevant KB guide links.</li>
+        <li><b>Ticket Ingestion:</b> A normalized row is appended to the <em>Tickets</em> sheet. A TicketID is written back to the intake row.</li>
+        <li><b>First Response / Resolution:</b> From the Sheet menu (<b>Support ★</b>), “Stamp First Response” and “Stamp Resolved (send CSAT)” set timestamps and email the CSAT link.</li>
+        <li><b>CSAT → Tickets:</b> The CSAT form writes into a CSAT tab; the script maps <i>TicketID</i>, pushes CSAT (1–5) and NPS (0–10) back onto the matching ticket row.</li>
+        <li><b>Metrics:</b> FRT_hours, Resolution_hours, FCR, CSAT, NPS roll into a 30-day dashboard, plus a Drivers view by Issue Type.</li>
+      </ol>
+    </article>
+
+    <!-- Architecture -->
+    <article class="card" id="architecture">
+      <h2>Architecture & Components</h2>
+      <ul>
+        <li><b>Google Forms (2):</b> Intake and CSAT forms (CSAT link is prefilled with TicketID on resolve).</li>
+        <li><b>Google Sheets:</b> 
+          <ul>
+            <li><b>Tickets</b> (working table) with computed columns:
+              <ul>
+                <li><b>FRT_hours</b> = hours from Created → FirstResponseAt</li>
+                <li><b>Resolution_hours</b> = hours from Created → ResolvedAt</li>
+                <li><b>InLast30d</b> = Created within 30 days</li>
+              </ul>
+            </li>
+            <li><b>Metrics</b> & <b>Drivers</b>: last-30-day rollups and IssueType-level cuts.</li>
+            <li><b>CSAT</b>: response sink; script writes CSAT/NPS back to Tickets by TicketID.</li>
+          </ul>
+        </li>
+        <li><b>Apps Script:</b> single installable <i>onFormSubmit</i> trigger handles both Forms, with:
+          <ul>
+            <li><b>Idempotency & locking:</b> Script lock + “Processed” flag per response row prevents duplicates.</li>
+            <li><b>Header-flexible mapping:</b> robust field extraction even if columns move/rename.</li>
+            <li><b>Menu tools:</b> “Stamp First Response”, “Stamp Resolved (send CSAT)”, “Mark FCR”, diagnostics, and CSAT backfill.</li>
+          </ul>
+        </li>
+        <li><b>Integrations:</b> Slack (webhook alerts), Gmail (ack + CSAT outreach), AI (ack copy), Notion KB (runbooks and self-serve fixes).</li>
+      </ul>
+    </article>
+
+    <!-- Process & Safeguards -->
+    <article class="card" id="process">
+      <h2>Process, Safeguards, and Ops Notes</h2>
+      <ul>
+        <li><b>Process design:</b> Standard intake fields + tagging; explicit first-response and resolution steps; FCR captured as Y/N.</li>
+        <li><b>Runbook/KB:</b> Notion guides for common drivers (Sign-in & Scopes, Common auth errors, Refresh schedule & limits, Field mapping, Data freshness checks).</li>
+        <li><b>Quality gates:</b> CSAT/NPS tied to TicketID; position-aware + header-aware CSAT mapping; unlocks per-driver quality analysis.</li>
+        <li><b>Resilience:</b> Single trigger, lock, and “Processed” guard eliminate duplicate ticket creation and re-posts.</li>
+      </ul>
+    </article>
+
+    <!-- Metrics -->
+    <article class="card" id="metrics">
+      <h2>Metrics Tracked (Last 30 Days)</h2>
+      <ul>
+        <li><b>FRT (First Response Time):</b> median + 90th percentile of <code>FRT_hours</code>.</li>
+        <li><b>Resolution Time (TTR):</b> median of <code>Resolution_hours</code>.</li>
+        <li><b>FCR %:</b> share of tickets with <code>FCR = Y</code>.</li>
+        <li><b>CSAT:</b> average of 1–5 ratings.</li>
+        <li><b>NPS:</b> average 0–10 likelihood to recommend (demo-scale).</li>
+      </ul>
+      <p style="color:var(--muted)">
+        Note: This is a demo; “industry benchmarks” vary by product and segment. The build emphasizes instrumenting reliable metrics and showing how they connect to process changes.
+      </p>
+    </article>
+
+    <!-- Links -->
+    <article class="card" id="links">
+      <h2>Live Demo Assets</h2>
+      <ul>
+        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeNaLp0r2qiK85_GeFJKdeGEZ68xdWj-4GlJzE3ysCnPyET8w/viewform?usp=header" target="_blank" rel="noreferrer">Intake Form</a></li>
+        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfKQU_NhwOlPfrKVm5zlZ1zthWngxXk1AAnHnx6EWt592ktPA/viewform?usp=header" target="_blank" rel="noreferrer">CSAT Survey</a></li>
+        <li><a href="https://docs.google.com/spreadsheets/d/1LDS6l6HrjDP4vgOjsOG_t1gSJMwpLMB7VL8hq_S-oEw/edit?usp=sharing" target="_blank" rel="noreferrer">Support Tickets (Demo) — Google Sheets</a></li>
+        <li><a href="https://www.notion.so/Runbook-Spreadsheet-Connector-Auth-Error-25c9f783369680448668d2d286c40903?source=copy_link" target="_blank" rel="noreferrer">Notion KB Home</a></li>
+        <li><a href="https://console.cloud.google.com/home/dashboard?project=support-in-a-box-script" target="_blank" rel="noreferrer">Google Cloud: Script Project</a></li>
+        <!-- Slack link omitted publicly unless viewers have workspace access -->
+      </ul>
+    </article>
+
+    <!-- Skills -->
+    <article class="card" id="skills">
+      <h2>Skills Demonstrated</h2>
+      <ul>
+        <li><b>CX Ops & Process:</b> intake design, triage flow, KB/runbook, SLA-aligned stamps, FCR capture.</li>
+        <li><b>Automation:</b> Apps Script trigger pipeline, Slack alerts, AI-drafted acks, CSAT write-back.</li>
+        <li><b>Systems Thinking:</b> idempotency/locking, header-robust mapping, minimal-surface integrations.</li>
+        <li><b>Analytics:</b> computed fields, 30-day filters, driver cuts, and definitions users can trust.</li>
+        <li><b>Documentation:</b> Notion guides and in-sheet notes to support self-serve fixes.</li>
+      </ul>
+    </article>
+
+    <!-- What I'd Improve Next -->
+    <article class="card" id="next">
+      <h2>What I’d Improve Next</h2>
+      <ul>
+        <li><b>Assignment & SLAs:</b> add assignees/queues; auto-escalate on aging FRT/TTR; on-call paging.</li>
+        <li><b>Knowledge routing:</b> auto-link KB by driver + product area; add search over runbooks.</li>
+        <li><b>Integrations:</b> optional Zendesk/Intercom sync; Notion API for live article titles/IDs.</li>
+        <li><b>QA & Insights:</b> transcript sampling; reason codes; weekly deltas on FRT/TTR/FCR/CSAT.</li>
+      </ul>
+    </article>
+
+    <!-- Privacy -->
+    <article class="card" id="privacy">
+      <h2>Privacy & Scope</h2>
+      <p>
+        Demo only. Uses Forms/Sheets email fields for notifications and prefilled CSAT links. No production customer data.
+        Slack and Gmail are used solely for demo alerts and acknowledgments.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
