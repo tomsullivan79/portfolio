@@ -119,6 +119,15 @@ li{ margin:.4em 0 }
   gap:24px;
 }
 
+.hero-banner {
+  /* …existing rules… */
+  margin-bottom: 24px;  /* matches .stack-lg gap */
+  border-radius: var(--radius);  /* same corner radius as cards */
+  overflow: hidden;              /* clip background image to rounded shape */
+  box-shadow: var(--shadow);     /* optional: same shadow depth as cards */
+  border: 1px solid var(--border); /* optional: consistent border */
+}
+
 .card{
   border-radius:16px;
   padding:24px;
