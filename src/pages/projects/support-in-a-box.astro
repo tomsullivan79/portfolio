@@ -3,6 +3,59 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Support-in-a-Box (CX Ops Demo) — Portfolio 2025">
+
+<section class="hero-banner">
+  <div class="hero-content">
+    <h1>Support-in-a-Box</h1>
+    <p>Streamlined CX Ops automation using Forms, Sheets & Apps Script</p>
+  </div>
+</section>
+
+<style>
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  background: url("/images/supportbox-hero.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+
+  /* New additions for consistency */
+  margin-bottom: 24px;          /* section spacing */
+  border-radius: var(--radius); /* same as cards */
+  overflow: hidden;             /* clip the bg image */
+  box-shadow: var(--shadow);    /* match card shadow */
+  border: 1px solid var(--border);
+}
+
+.hero-content {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.hero-banner h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,.5);
+}
+
+.hero-banner p {
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+</style>
+
+
+
+
   <!-- HERO -->
   <header class="hero max-920">
     <div>
@@ -54,15 +107,57 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     <article class="card" id="demo-flow">
       <h2>How the Demo Works</h2>
       <ol>
-        <li><b>Submit Issue:</b> User fills the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNaLp0r2qiK85_GeFJKdeGEZ68xdWj-4GlJzE3ysCnPyET8w/viewform?usp=header" target="_blank" rel="noreferrer">Intake Form</a>.</li>
-        <li><b>Slack Alert:</b> Apps Script posts a formatted ticket summary to a Slack channel.</li>
-        <li><b>AI Acknowledgment:</b> An email is sent via Gmail with a friendly AI-drafted ack + relevant KB guide links.</li>
-        <li><b>Ticket Ingestion:</b> A normalized row is appended to the <em>Tickets</em> sheet. A TicketID is written back to the intake row.</li>
-        <li><b>First Response / Resolution:</b> From the Sheet menu (<b>Support ★</b>), “Stamp First Response” and “Stamp Resolved (send CSAT)” set timestamps and email the CSAT link.</li>
-        <li><b>CSAT → Tickets:</b> The CSAT form writes into a CSAT tab; the script maps <i>TicketID</i>, pushes CSAT (1–5) and NPS (0–10) back onto the matching ticket row.</li>
-        <li><b>Metrics:</b> FRT_hours, Resolution_hours, FCR, CSAT, NPS roll into a 30-day dashboard, plus a Drivers view by Issue Type.</li>
-      </ol>
-    </article>
+        <li>
+      <b>Submit Issue:</b> User fills the 
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNaLp0r2qiK85_GeFJKdeGEZ68xdWj-4GlJzE3ysCnPyET8w/viewform?usp=header" 
+         target="_blank" rel="noreferrer">Intake Form</a>.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-1.jpg" alt="Intake Form" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+       <li>
+      <b>Slack Alert:</b> Apps Script posts a formatted ticket summary to a Slack channel.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-2.jpg" alt="Slack Notification" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+
+    <li>
+      <b>AI Acknowledgment:</b> An email is sent via Gmail with a friendly AI-drafted ack + relevant KB guide links.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-3.jpg" alt="AI Acknowledgment Email" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+
+    <li>
+      <b>Ticket Ingestion:</b> A normalized row is appended to the <em>Tickets</em> sheet. A TicketID is written back to the intake row.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-4.jpg" alt="Tickets Sheet" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+
+    <li>
+      <b>First Response / Resolution:</b> From the Sheet menu (<b>Support ★</b>), “Stamp First Response” and “Stamp Resolved (send CSAT)” set timestamps and email the CSAT link.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-5.jpg" alt="First Response Example" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+
+    <li>
+      <b>CSAT → Tickets:</b> The CSAT form writes into a CSAT tab; the script maps <i>TicketID</i>, pushes CSAT (1–5) and NPS (0–10) back onto the matching ticket row.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-6.jpg" alt="CSAT Survey" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+
+    <li>
+      <b>Metrics:</b> FRT_hours, Resolution_hours, FCR, CSAT, NPS roll into a 30-day dashboard, plus a Drivers view by Issue Type.
+      <div style="text-align:center; margin: 1em 0;">
+        <img src="/images/support-7.jpg" alt="Metrics Dashboard" style="max-width:90%; border-radius:8px;">
+      </div>
+    </li>
+  </ol>
+</article>
 
     <!-- Architecture -->
     <article class="card" id="architecture">
